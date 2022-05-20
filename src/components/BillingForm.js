@@ -186,11 +186,11 @@ const BillingForm = () => {
             <>
               <Row>
                 Vat {item.tax}%
-                {item.tax === 21 ? (
+                {/* {item.tax === 21 ? (
                   <p>{(item.tax / 100) * handlecompute()}</p>
                 ) : (
                   <p>{(item.tax / 100) * handlecompute()}</p>
-                )}
+                )} */}
                 {item.tax > 0 && <p>{(item.tax / 100) * handlecompute()}</p>}
               </Row>
               <hr />
@@ -202,14 +202,6 @@ const BillingForm = () => {
               </Row>
             </>
           ))}
-
-          <hr />
-          <Row>
-            <span>
-              Totals
-              {/* <p>{handlecompute() + (item.tax / 100) * handlecompute()}</p> */}
-            </span>
-          </Row>
         </div>
       </Total>
     </div>

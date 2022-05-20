@@ -11,9 +11,10 @@ const BillingForm = () => {
   const [formData, setFormData] = useState([
     {
       description: '',
-      cost: '',
-      quantity: '',
-      tax: '',
+      cost: 0,
+      quantity: 0,
+      total: 0,
+      tax: 0,
     },
   ]);
 
@@ -24,12 +25,6 @@ const BillingForm = () => {
     }
     return total;
   };
-
-  //sum of all totals and
-
-  // const [results, setResults] = useState([
-  //   { subTotal: '', tax: '', grandTotal: '' },
-  // ]);
 
   const handleinputchange = (e, index) => {
     const { name, value } = e.target;
@@ -44,18 +39,28 @@ const BillingForm = () => {
     setFormData(list);
   };
 
-  const handleaddclick = () => {
+  const handleaddclick = (e) => {
+    e.preventDefault();
     setFormData([
       ...formData,
       {
         description: '',
-        cost: '',
-        quantity: '',
-        total: '',
-        tax: '',
+        cost: 0,
+        quantity: 0,
+        total: 0,
+        tax: 0,
       },
     ]);
   };
+
+  const total = formData.reduce((acc, curr) => {
+    return acc + Number(curr.cost) * Number(curr.quantity);
+  }, 0);
+
+  console.log(total);
+  console.log(formData);
+
+  //calculate each item's subtotal and tax
 
   return (
     <div>
@@ -108,11 +113,11 @@ const BillingForm = () => {
                     />
                   </Form.Group>
                 </Col>
-
                 <Col>
                   <Form.Group>
                     <Form.Label>Total</Form.Label>
                     <Form.Control
+                      readOnly
                       type='number'
                       placeholder='Total'
                       name='total'
@@ -168,31 +173,42 @@ const BillingForm = () => {
         ))}
       </Form>
       <hr />
-      {/* <p>
-        jhougiuibu
-        {formData.reduce((acc, curr) => acc + curr.total, 0)}
-      </p> */}
 
       <Total className={classes.Totalss}>
-      <div>
-      <Row>
+        <div>
+          <Row>
             <span>
               SubTotal
               <p>{handlecompute()}</p>
             </span>
           </Row>
-        {formData.map((item,index) => (
-          //output each tax value from the form
-          
-        ))}
-        
-          
-          
+          {formData.map((item, index) => (
+            <>
+              <Row>
+                Vat {item.tax}%
+                {item.tax === 21 ? (
+                  <p>{(item.tax / 100) * handlecompute()}</p>
+                ) : (
+                  <p>{(item.tax / 100) * handlecompute()}</p>
+                )}
+                {item.tax > 0 && <p>{(item.tax / 100) * handlecompute()}</p>}
+              </Row>
+              <hr />
+              <Row>
+                <span>
+                  Totals
+                  <p>{handlecompute() + (item.tax / 100) * handlecompute()}</p>
+                </span>
+              </Row>
+            </>
+          ))}
+
+          <hr />
           <Row>
-            <span>tax</span>
-          </Row>
-          <Row>
-            <span></span>
+            <span>
+              Totals
+              {/* <p>{handlecompute() + (item.tax / 100) * handlecompute()}</p> */}
+            </span>
           </Row>
         </div>
       </Total>
@@ -212,3 +228,11 @@ const Total = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `;
+
+{
+  /* {item.tax === 21 ? (
+                  <p> {formData.reduce((acc, curr) => acc + curr.tax, 0)}%</p>
+                ) : (
+                  <p>{formData.reduce((acc, curr) => acc + curr.tax, 0)}%</p>
+                )} */
+}

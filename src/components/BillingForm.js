@@ -17,14 +17,6 @@ const BillingForm = () => {
     },
   ])
 
-  const handlecompute = () => {
-    let total = 0
-    for (let i = 0; i < formData.length; i++) {
-      total += Number(formData[i].cost) * Number(formData[i].quantity)
-    }
-    return total
-  }
-
   const handleinputchange = (e, index) => {
     const { name, value } = e.target
     const list = [...formData]
@@ -52,12 +44,15 @@ const BillingForm = () => {
     ])
   }
 
-  const total = formData.reduce((acc, curr) => {
-    return acc + Number(curr.cost) * Number(curr.quantity)
-  }, 0)
+  const handlecompute = () => {
+    const total = formData.reduce((acc, curr) => {
+      return acc + Number(curr.cost) * Number(curr.quantity)
+    }, 0)
+    return total
+  }
 
-  console.log(total)
-  console.log(formData)
+  // console.log(total)
+  // console.log(formData)
 
   //calculate each item's subtotal and tax
 
@@ -176,28 +171,26 @@ const BillingForm = () => {
       <Total className={classes.Totalss}>
         <div>
           <Row>
-            <span>
-              SubTotal
+            <Col>SubTotal</Col>
+            <Col>
               <p>{handlecompute()}</p>
-            </span>
+            </Col>
           </Row>
           {formData.map((item, index) => (
             <>
               <Row>
-                Vat {item.tax}%
-                {/* {item.tax === 21 ? (
+                <Col xs={8}>Vat {item.tax} %</Col>
+
+                <Col>
                   <p>{(item.tax / 100) * handlecompute()}</p>
-                ) : (
-                  <p>{(item.tax / 100) * handlecompute()}</p>
-                )} */}
-                {item.tax > 0 && <p>{(item.tax / 100) * handlecompute()}</p>}
+                </Col>
               </Row>
               <hr />
               <Row>
-                <span>
-                  Totals
+                <Col xs={7}> Totals</Col>
+                <Col>
                   <p>{handlecompute() + (item.tax / 100) * handlecompute()}</p>
-                </span>
+                </Col>
               </Row>
             </>
           ))}
@@ -220,10 +213,8 @@ const Total = styled.div`
   margin-bottom: 10px;
 `
 
-{
-  /* {item.tax === 21 ? (
+/* {item.tax === 21 ? (
                   <p> {formData.reduce((acc, curr) => acc + curr.tax, 0)}%</p>
                 ) : (
                   <p>{formData.reduce((acc, curr) => acc + curr.tax, 0)}%</p>
                 )} */
-}

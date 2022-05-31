@@ -1,12 +1,11 @@
-// import '../App.css';
-import React, { useState } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import React, { useState } from 'react'
+import { Col, Container, Form, Row } from 'react-bootstrap'
+import styled from 'styled-components'
 
-const useStyles = () => ({});
+const useStyles = () => ({})
 
 const BillingForm = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const [formData, setFormData] = useState([
     {
@@ -16,31 +15,31 @@ const BillingForm = () => {
       total: 0,
       tax: 0,
     },
-  ]);
+  ])
 
   const handlecompute = () => {
-    let total = 0;
+    let total = 0
     for (let i = 0; i < formData.length; i++) {
-      total += Number(formData[i].cost) * Number(formData[i].quantity);
+      total += Number(formData[i].cost) * Number(formData[i].quantity)
     }
-    return total;
-  };
+    return total
+  }
 
   const handleinputchange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...formData];
-    list[index][name] = value;
-    setFormData(list);
-  };
+    const { name, value } = e.target
+    const list = [...formData]
+    list[index][name] = value
+    setFormData(list)
+  }
 
   const handleremove = (index) => {
-    const list = [...formData];
-    list.splice(index, 1);
-    setFormData(list);
-  };
+    const list = [...formData]
+    list.splice(index, 1)
+    setFormData(list)
+  }
 
   const handleaddclick = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setFormData([
       ...formData,
       {
@@ -50,15 +49,15 @@ const BillingForm = () => {
         total: 0,
         tax: 0,
       },
-    ]);
-  };
+    ])
+  }
 
   const total = formData.reduce((acc, curr) => {
-    return acc + Number(curr.cost) * Number(curr.quantity);
-  }, 0);
+    return acc + Number(curr.cost) * Number(curr.quantity)
+  }, 0)
 
-  console.log(total);
-  console.log(formData);
+  console.log(total)
+  console.log(formData)
 
   //calculate each item's subtotal and tax
 
@@ -205,10 +204,10 @@ const BillingForm = () => {
         </div>
       </Total>
     </div>
-  );
-};
+  )
+}
 
-export default BillingForm;
+export default BillingForm
 
 const Total = styled.div`
   position: absolute;
@@ -219,7 +218,7 @@ const Total = styled.div`
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
-`;
+`
 
 {
   /* {item.tax === 21 ? (
